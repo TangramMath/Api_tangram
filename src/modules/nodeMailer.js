@@ -23,7 +23,7 @@ async function SendToken(token, email) {
       subject: 'Nothing',
       from: 'Matheus <tangram.mb@gmail.com',
       to: `${email}`
-    })
+    }, err => console.log)
   } catch {
     throw Error;
   }
