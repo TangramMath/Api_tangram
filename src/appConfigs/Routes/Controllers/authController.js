@@ -35,9 +35,7 @@ router.get('/login/notToken/:login/:psswrd', async (req, res) => {
 router.post('/reset/psswrd', async (req, res) => {
     try {
         const body = req.body
-        console.log('pegou req')
         const response = await useUser.setResetPassword(body.cde);
-        console.log('pegou user')
         const token = response.token
         await sendToken(token, response.number)
         res.status(200).send({ msg: 'everything is okay' })
