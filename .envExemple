@@ -1,0 +1,5 @@
+MONGOURL = ;
+SECRET = ;
+SALT = ;
+MAIL_USER = ;
+MAIL_PSSWRD = ;
