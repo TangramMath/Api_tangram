@@ -16,7 +16,7 @@ router.post('/signup/', async (req, res) => {
 router.get('/login/token', async (req, res) => {
     try {
         const userData = await useUser.read_token(req.headers.authorization);
-        res.status(200).send({ user: userData, token: req.headers.authorization })
+        res.status(200).send(userData)
     } catch {
         res.status(401).send({ msg: 'There is no token' })
     }
