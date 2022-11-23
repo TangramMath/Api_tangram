@@ -4,8 +4,8 @@ const jwt = require('../../appConfigs/token/jwt');
 const crypt = require('../../appConfigs/hash/hash')
 const psswrdToken = require('../../appConfigs/token/psswrdToken');
 
-async function create({ cde, email, name, psswrd }) {
-    const body = { cde: cde, email: email, name: name, psswrd: await crypt.hash(psswrd), changeTk: '', expireTime: new Date() }
+async function create({ cde, number, name, psswrd }) {
+    const body = { cde: cde, number: number, name: name, psswrd: await crypt.hash(psswrd), changeTk: '', expireTime: new Date() }
     const user = await User.create(body);
     const token = jwt.generate(user);
     return token;
@@ -43,7 +43,7 @@ async function setResetPassword(cde) {
             changeTk: tk.passToken,
             expireTime: tk.Hour
         })
-        return { token: tk.passToken, email: user.email };
+        return { token: tk.passToken, number: user.number };
     } catch {
         throw Error;
     }

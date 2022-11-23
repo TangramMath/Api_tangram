@@ -1,6 +1,6 @@
 const useUser = require('../../../Database/use_cases/crudUser');
 const express = require('express');
-const sendToken = require('../../../modules/nodeMailer');
+const sendToken = require('../../../modules/twilio');
 
 const router = express.Router();
 
@@ -39,7 +39,7 @@ router.post('/reset/psswrd', async (req, res) => {
         const response = await useUser.setResetPassword(body.cde);
         console.log('pegou user')
         const token = response.token
-        await sendToken(token, response.email)
+        await sendToken(token, response.number)
         res.status(200).send({ msg: 'everything is okay' })
     } catch {
         res.status(404).send({ msg: 'unable to do it' })
