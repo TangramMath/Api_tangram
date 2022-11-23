@@ -5,7 +5,7 @@ const crypt = require('../../appConfigs/hash/hash')
 const psswrdToken = require('../../appConfigs/token/psswrdToken');
 
 async function create({ cde, number, name, psswrd }) {
-    const body = { cde: cde, number: number, name: name, psswrd: await crypt.hash(psswrd), changeTk: '', expireTime: new Date() }
+    const body = { cde: Number(cde), number: Number(number), name: name, psswrd: await crypt.hash(psswrd), changeTk: '', expireTime: new Date() }
     const user = await User.create(body);
     const token = jwt.generate(user);
     return token;
@@ -22,7 +22,7 @@ function read_token(token) {
 
 async function read_login(login, psswrd) {
     try {
-        const user = await User.findOne({ cde: login })
+        const user = await User.findOne({ cde: Number(login) })
         const bool = await crypt.compare(psswrd, user.psswrd);
         if (bool) {
             return jwt.generate(user);
@@ -36,7 +36,7 @@ async function read_login(login, psswrd) {
 
 async function setResetPassword(cde) {
     try {
-        const user = await User.findOne({ cde: cde })
+        const user = await User.findOne({ cde: Number(cde) })
         if (!user) { throw Error; }
         const tk = psswrdToken();
         await User.findByIdAndUpdate({ _id: user._id }, {
@@ -50,7 +50,7 @@ async function setResetPassword(cde) {
 }
 
 async function checkChangePsswrd(cde, token) {
-    const user = await User.findOne({ cde: cde });
+    const user = await User.findOne({ cde: Number(cde) });
     if (user.changeTk === token && user.expireTime > new Date()) {
         return true;
     }
@@ -58,7 +58,7 @@ async function checkChangePsswrd(cde, token) {
 }
 
 async function changePassword(cde, newPsswrd) {
-    User.findOneAndUpdate({ cde: cde }, {
+    User.findOneAndUpdate({ cde: Number(cde) }, {
         psswrd: await crypt.hash(newPsswrd)
     })
 }
