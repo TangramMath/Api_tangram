@@ -8,7 +8,6 @@ const userSchema = new mongoose.Schema({
     }, number: {
         type: Number,
         require: true,
-        unique: true
     }, name: {
         type: String,
         require: true,

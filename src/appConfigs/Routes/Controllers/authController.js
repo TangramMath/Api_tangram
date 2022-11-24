@@ -1,6 +1,6 @@
 const useUser = require('../../../Database/use_cases/crudUser');
 const express = require('express');
-const sendToken = require('../../../modules/twilio');
+// const sendToken = require('../../../modules/twilio');
 
 const router = express.Router();
 
@@ -37,7 +37,8 @@ router.post('/reset/psswrd', async (req, res) => {
         const body = req.body
         const response = await useUser.setResetPassword(body.cde);
         const token = response.token
-        await sendToken(token, response.number)
+        // await sendToken(token, response.number)
+        console.log(token);
         res.status(200).send({ msg: 'everything is okay' })
     } catch {
         res.status(404).send({ msg: 'unable to do it' })
