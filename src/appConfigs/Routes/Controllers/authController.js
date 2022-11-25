@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.post('/signup/', async (req, res) => {
     try {
+        console.log(req.headers, req.body);
         const token = await useUser.create(req.body);
         res.status(200).send(token)
     } catch {
