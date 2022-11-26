@@ -6,7 +6,6 @@ const router = express.Router();
 
 router.post('/signup/', (req, res) => {
     try {
-        console.log(req.headers, req.body);
         useUser.create(req.body).then(data => {
             res.status(200).send(data)
         })
@@ -25,14 +24,13 @@ router.get('/login/token', (req, res) => {
     }
 })
 
-router.get('/login/notToken/:login/:psswrd', (req, res) => {
-    useUser.read_login(req.params.login, req.params.psswrd).then(token => {
+router.get('/login/notToken', (req, res) => {
+    useUser.read_login(req.headers.login, req.headers.psswrd).then(token => {
         if (token === '') {
             res.status(401).send({ msg: 'Invalid login' })
         } else {
-            useUser.read_token(token).then(userData => {
-                res.status(200).send({ user: userData, token: token })
-            })
+            const userData = useUser.read_token(token)
+            res.status(200).send({ user: userData, token: token })
         }
     })
 })
