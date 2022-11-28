@@ -24,12 +24,11 @@ router.post('/signup/', (req, res) => {
 
 router.get('/login/token', (req, res) => {
     try {
-        useUser.read_token(req.headers.authorization).then(data => {
-            res.status(200).send({
-                status: 200,
-                msg: 'LogIn sucessfully',
-                content: { user: data }
-            })
+        const data = useUser.read_token(req.headers.authorization)
+        res.status(200).send({
+            status: 200,
+            msg: 'LogIn sucessfully',
+            content: { user: data }
         })
     } catch {
         res.status(401).send({
