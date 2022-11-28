@@ -6,9 +6,11 @@ const psswrdToken = require('../../appConfigs/token/psswrdToken');
 
 async function create({ cde, number, name, psswrd }) {
     const body = { cde: Number(cde), number: Number(number), name: name, psswrd: await crypt.hash(psswrd), changeTk: '', expireTime: new Date() }
-    const user = await User.create(body);
-    const token = jwt.generate(user);
-    return token;
+    const user = await User.create(body).catch(err => {return undefined});
+    if(user !== undefined){
+        const token = jwt.generate(user);
+        return token;
+    }
 }
 
 function read_token(token) {
