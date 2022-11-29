@@ -12,5 +12,6 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 require('./src/appConfigs/Routes/Controllers/authController')(app)
+require('./src/modules/google/sheetController')(app)
 
 app.listen(port, () => console.log(`Listening on port ${port}`))

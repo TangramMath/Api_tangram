@@ -5,3 +5,5 @@
  Criar jogo Client Side salvo por aqui.
 
  página web para criar data school
+
+depois rode npm uninstall @google-cloud/local-auth googleapis
